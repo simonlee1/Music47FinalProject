@@ -14,7 +14,16 @@ var ReadOuts = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ReadOuts.__proto__ || Object.getPrototypeOf(ReadOuts)).call(this));
 
-    _this.state = {};
+    _this.state = {
+      callingStatus: "Not Calling",
+      serverStatus: "Disconnected",
+      connection: "Disconnected",
+      incomingPackets: 0,
+      droppedPackets: 0,
+      fillStatus: [0, 0],
+      inChannel: [0, 0, 0, 0],
+      outChannel: [0, 0, 0, 0]
+    };
     return _this;
   }
 
@@ -28,6 +37,168 @@ var ReadOuts = function (_React$Component) {
           "h2",
           null,
           "Read Outs"
+        ),
+        React.createElement(
+          "div",
+          { className: "row my-4" },
+          React.createElement(
+            "div",
+            { className: "col-4" },
+            "Call Status: ",
+            React.createElement(
+              "span",
+              { className: this.state.callingStatus == "Not Calling" ? "text-danger" : "text-success" },
+              this.state.callingStatus
+            )
+          ),
+          React.createElement(
+            "div",
+            { className: "col-4" },
+            "Server Status: ",
+            React.createElement(
+              "span",
+              { className: this.state.serverStatus == "Disconnected" ? "text-danger" : "text-success" },
+              this.state.serverStatus
+            )
+          ),
+          React.createElement(
+            "div",
+            { className: "col-4" },
+            "Connection Status: ",
+            React.createElement(
+              "span",
+              { className: this.state.connection == "Disconnected" ? "text-danger" : "text-success" },
+              this.state.connection
+            )
+          )
+        ),
+        React.createElement(
+          "div",
+          { className: "row my-4" },
+          React.createElement(
+            "div",
+            { className: "col-4" },
+            "Fill: ",
+            this.state.fillStatus[0],
+            " - ",
+            this.state.fillStatus[1]
+          ),
+          React.createElement(
+            "div",
+            { className: "col-4" },
+            "Incoming Packets: ",
+            this.state.incomingPackets
+          ),
+          React.createElement(
+            "div",
+            { className: "col-4" },
+            "Dropped Packets: ",
+            this.state.droppedPackets,
+            React.createElement(
+              "button",
+              { className: "btn btn-sm btn-light mx-2" },
+              "Reset"
+            )
+          )
+        ),
+        React.createElement(
+          "div",
+          { className: "col-10 mx-auto" },
+          React.createElement(
+            "table",
+            { className: "table table-bordered table-dark" },
+            React.createElement(
+              "thead",
+              null,
+              React.createElement(
+                "tr",
+                null,
+                React.createElement("th", { scope: "col" }),
+                React.createElement(
+                  "th",
+                  { scope: "col" },
+                  "Sample Rate"
+                ),
+                React.createElement(
+                  "th",
+                  { scope: "col" },
+                  "Channels"
+                ),
+                React.createElement(
+                  "th",
+                  { scope: "col" },
+                  "Block Size"
+                ),
+                React.createElement(
+                  "th",
+                  { scope: "col" },
+                  "Kbps"
+                )
+              )
+            ),
+            React.createElement(
+              "tbody",
+              null,
+              React.createElement(
+                "tr",
+                null,
+                React.createElement(
+                  "td",
+                  null,
+                  "Out"
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  this.state.outChannel[0]
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  this.state.outChannel[1]
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  this.state.outChannel[2]
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  this.state.outChannel[3]
+                )
+              ),
+              React.createElement(
+                "tr",
+                null,
+                React.createElement(
+                  "td",
+                  null,
+                  "In"
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  this.state.inChannel[0]
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  this.state.inChannel[0]
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  this.state.inChannel[0]
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  this.state.inChannel[0]
+                )
+              )
+            )
+          )
         )
       );
     }

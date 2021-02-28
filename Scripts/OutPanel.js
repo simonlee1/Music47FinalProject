@@ -14,17 +14,157 @@ var OutPanel = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (OutPanel.__proto__ || Object.getPrototypeOf(OutPanel)).call(this));
 
-    _this.state = {};
+    _this.state = {
+      outputVal: 0,
+      muteOn: false,
+      balance: 50
+    };
     return _this;
   }
 
   _createClass(OutPanel, [{
+    key: "onTodoChange",
+    value: function onTodoChange(value) {
+      this.setState({
+        outputVal: value
+      });
+    }
+  }, {
+    key: "onBalanceChange",
+    value: function onBalanceChange(value) {
+      this.setState({
+        balance: value
+      });
+    }
+  }, {
+    key: "onResetBalance",
+    value: function onResetBalance() {
+      this.setState({
+        balance: 50
+      });
+    }
+  }, {
+    key: "onMute",
+    value: function onMute() {
+      if (this.state.muteOn) {
+        this.setState({
+          muteOn: false
+        });
+      } else {
+        this.setState({
+          muteOn: true
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return React.createElement(
         "div",
-        { className: "col-6 text-center text-white mx-auto" },
-        "This is the out panel"
+        { className: "col-6 text-center text-white mx-auto my-4" },
+        React.createElement(
+          "label",
+          { className: "form-label" },
+          "Output Panel"
+        ),
+        React.createElement(
+          "div",
+          { className: "row d-flex justify-content-center" },
+          React.createElement(
+            "div",
+            { className: "col-7" },
+            React.createElement(
+              "div",
+              { className: "col-6 mx-auto" },
+              React.createElement(
+                "label",
+                null,
+                "Level"
+              ),
+              React.createElement("input", {
+                type: "range",
+                className: "form-range col",
+                min: "0",
+                max: "100",
+                value: this.state.outputVal,
+                onChange: function onChange(e) {
+                  return _this2.onTodoChange(e.target.value);
+                }
+              }),
+              React.createElement("input", {
+                type: "number",
+                style: { textAlign: "center" },
+                className: "form-control col mb-2",
+                max: "100",
+                min: "0",
+                value: this.state.outputVal,
+                onChange: function onChange(e) {
+                  return _this2.onTodoChange(e.target.value);
+                }
+              })
+            ),
+            React.createElement(
+              "div",
+              { className: "col-6 mx-auto" },
+              React.createElement(
+                "button",
+                {
+                  type: "button",
+                  className: "btn btn" + (this.state.muteOn ? "-" : "-outline-") + "light mx-2 my-2",
+                  onClick: function onClick(e) {
+                    return _this2.onMute();
+                  }
+                },
+                "Mute"
+              ),
+              React.createElement(
+                "div",
+                { className: "form-check my-2 mx-auto", style: { width: "50%" } },
+                React.createElement("input", {
+                  className: "form-check-input",
+                  type: "checkbox",
+                  value: "",
+                  id: "flexCheckDefault"
+                }),
+                React.createElement(
+                  "label",
+                  { className: "form-check-label", htmlFor: "flexCheckDefault" },
+                  "Mono"
+                )
+              )
+            ),
+            React.createElement(
+              "div",
+              { className: "col-6 mx-auto" },
+              React.createElement(
+                "label",
+                null,
+                "Balance"
+              ),
+              React.createElement("input", {
+                type: "range",
+                className: "form-range col",
+                min: "0",
+                max: "100",
+                value: this.state.balance,
+                onChange: function onChange(e) {
+                  return _this2.onBalanceChange(e.target.value);
+                }
+              }),
+              React.createElement(
+                "button",
+                { className: "btn btn-sm btn-light mx-2", onClick: function onClick(e) {
+                    return _this2.onResetBalance();
+                  } },
+                "Reset"
+              )
+            )
+          ),
+          React.createElement("div", { className: "col-1 bg-secondary mx-1" }),
+          React.createElement("div", { className: "col-1 bg-secondary mx-1" })
+        )
       );
     }
   }]);
