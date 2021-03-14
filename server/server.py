@@ -29,7 +29,7 @@ class MyClass:
     # quackpanel readouts
     def get_readouts(self):
         self.s.send(bytes("5;", "utf-8"))
-        data = str(self.con.recv(10000))[2:-4]
+        data = str(self.con.recv(1000))[2:-4]
         values = data.split(' ')
         result = {'dropouts' : values[0],
                     'calling' : values[1],
@@ -51,20 +51,30 @@ class MyClass:
 
     def send_values(self, action, d, dict):
         for k,v in dict.items():
-            sendstring = f"{action} {d[k]} {v};"
+            if k == 'mute' or k == 'reset':
+                sendstring = f'{action} {d[k]};'
+            if k == 'cllnm' or k == 'srvrnm':
+                sendstring = f'{action} {d[k]} symbol {v};'
+            else:
+                sendstring = f'{action} {d[k]} {v};'
             self.s.send(bytes(sendstring, "utf-8"))
 
-
+    # for mute, doesn't matter what value is
     def set_inpanel(self, dict):
         d = {'level' : 0, 'mute' : 1, 'test' : 2, 'im' : 3, 'imdelay' : 4}
         self.send_values(2, d, dict)
 
 
+    # for cllnm and srvrnm, add 'symbol ' in front of actual name
+    # for reset, doesn't matter what value sent is
     def set_quackpanel(self, dict):
         d = {'state' : 0, 'chnls' : 1, 'blcksz' : 2, 'dbl' : 3, 'id' : 4, 'cllnm' : 5, 'srvrnm' : 6, 'reset' : 7}
         self.send_values(3, d, dict)
 
 
+    # for mute, doesn't matter what value is
+    # for bal, value must be >=1, <=9
+    # for reset, doesn't matter what value is
     def set_outpanel(self, dict):
         d = {'level' : 0, 'mute' : 1, 'bal' : 2, 'reset' : 3, 'mono' : 4}
         self.send_values(4, d, dict)
@@ -72,5 +82,5 @@ class MyClass:
 
 server = MyClass()
 
-server.get_readouts()
+server.set_quackpanel({'cllnm': 'ballsnack'})
 server.disconnect()
