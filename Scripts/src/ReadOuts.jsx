@@ -100,9 +100,9 @@ class ReadOuts extends React.Component {
               <tr>
                 <td>In</td>
                 <td>{this.state.inChannel[0]}</td>
-                <td>{this.state.inChannel[0]}</td>
-                <td>{this.state.inChannel[0]}</td>
-                <td>{this.state.inChannel[0]}</td>
+                <td>{this.state.inChannel[1]}</td>
+                <td>{this.state.inChannel[2]}</td>
+                <td>{this.state.inChannel[3]}</td>
               </tr>
             </tbody>
           </table>

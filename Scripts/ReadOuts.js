@@ -225,17 +225,17 @@ var ReadOuts = function (_React$Component) {
                 React.createElement(
                   "td",
                   null,
-                  this.state.inChannel[0]
+                  this.state.inChannel[1]
                 ),
                 React.createElement(
                   "td",
                   null,
-                  this.state.inChannel[0]
+                  this.state.inChannel[2]
                 ),
                 React.createElement(
                   "td",
                   null,
-                  this.state.inChannel[0]
+                  this.state.inChannel[3]
                 )
               )
             )
