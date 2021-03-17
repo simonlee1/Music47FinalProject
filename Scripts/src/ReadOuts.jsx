@@ -35,6 +35,16 @@ class ReadOuts extends React.Component {
     setInterval( () => this.updateState(), 1000);
   }
 
+  onReset(){
+    let data = {
+      reset: 0
+    }
+
+    $.post("/setQuack", data, function(){
+
+    })
+  }
+
   render() {
     return (
       <div className="col-12 text-center text-white mx-auto">
@@ -63,7 +73,7 @@ class ReadOuts extends React.Component {
           </div>
           <div className="col-4">
             Dropped Packets: {this.state.droppedPackets}
-            <button className="btn btn-sm btn-light mx-2">Reset</button>
+            <button className="btn btn-sm btn-light mx-2" onClick={(e) => this.onReset()}>Reset</button>
           </div>
         </div>
 

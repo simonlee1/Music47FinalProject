@@ -56,8 +56,19 @@ var ReadOuts = function (_React$Component) {
       }, 1000);
     }
   }, {
+    key: "onReset",
+    value: function onReset() {
+      var data = {
+        reset: 0
+      };
+
+      $.post("/setQuack", data, function () {});
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return React.createElement(
         "div",
         { className: "col-12 text-center text-white mx-auto" },
@@ -124,7 +135,9 @@ var ReadOuts = function (_React$Component) {
             this.state.droppedPackets,
             React.createElement(
               "button",
-              { className: "btn btn-sm btn-light mx-2" },
+              { className: "btn btn-sm btn-light mx-2", onClick: function onClick(e) {
+                  return _this3.onReset();
+                } },
               "Reset"
             )
           )
