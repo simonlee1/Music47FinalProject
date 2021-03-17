@@ -18,7 +18,10 @@ var QuackPanel = function (_React$Component) {
       inputDelay: 10,
       channelVal: "2",
       blockVal: "64",
-      isOn: false
+      isOn: false,
+      double: false,
+      callName: "",
+      server: "foo.ucsd.edu"
     };
     return _this;
   }
@@ -28,12 +31,21 @@ var QuackPanel = function (_React$Component) {
     value: function onChange(e) {
       if (e.target.tagName === "INPUT") {
         this.setState({ inputDelay: e.target.value });
+        var data = {
+          "id": e.target.value
+        };
+        $.post("/setQuack", data, function () {});
       } else {
         if (this.state.isOn) {
           this.setState({ isOn: false });
         } else {
           this.setState({ isOn: true });
         }
+
+        var _data = {
+          "state": this.state.isOn ? 0 : 1
+        };
+        $.post("/setQuack", _data, function () {});
       }
     }
   }, {
@@ -43,10 +55,47 @@ var QuackPanel = function (_React$Component) {
         this.setState({
           channelVal: value
         });
+        var data = {
+          "chnls": value
+        };
+        $.post("/setQuack", data, function () {});
       } else if (event.target.name == "BlockSize") {
         this.setState({
           blockVal: value
         });
+        var _data2 = {
+          "blcksz": value == "64" ? 0 : value == "128" ? 1 : 2
+        };
+        $.post("/setQuack", _data2, function () {});
+      } else if (event.target.name == "2x") {
+        var _data3 = {
+          "dbl": event.target.checked ? 1 : 0
+        };
+        $.post("/setQuack", _data3, function () {});
+      }
+    }
+  }, {
+    key: "onNameChange",
+    value: function onNameChange(e) {
+      if (e.target.name == "callName") {
+        this.setState({
+          callName: e.target.value
+        });
+        var data = {
+          cllnm: e.target.value
+        };
+
+        $.post("/setQuack", data, function () {});
+      } else if (e.target.name == "serverName") {
+        this.setState({
+          server: e.target.value
+        });
+
+        var _data4 = {
+          srvrnm: e.target.value
+        };
+
+        $.post("/setQuack", _data4, function () {});
       }
     }
   }, {
@@ -183,7 +232,11 @@ var QuackPanel = function (_React$Component) {
                 className: "form-check-input",
                 type: "checkbox",
                 value: "",
-                id: "flexCheckDefault"
+                id: "flexCheckDefault",
+                name: "2x",
+                onClick: function onClick(e) {
+                  return _this2.onClick(e, "2x");
+                }
               }),
               React.createElement(
                 "label",
@@ -203,7 +256,9 @@ var QuackPanel = function (_React$Component) {
                 null,
                 "Call Name"
               ),
-              React.createElement("input", { type: "text", className: "form-control" })
+              React.createElement("input", { type: "text", className: "form-control", name: "callName", onChange: function onChange(e) {
+                  _this2.onNameChange(e);
+                }, value: this.state.callName })
             ),
             React.createElement(
               "div",
@@ -213,7 +268,9 @@ var QuackPanel = function (_React$Component) {
                 null,
                 "Server"
               ),
-              React.createElement("input", { type: "text", className: "form-control" })
+              React.createElement("input", { type: "text", className: "form-control", name: "serverName", onChange: function onChange(e) {
+                  _this2.onNameChange(e);
+                }, value: this.state.server })
             )
           )
         )

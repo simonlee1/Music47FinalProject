@@ -13,6 +13,28 @@ class ReadOuts extends React.Component {
     };
   }
 
+  updateState(){
+    var self = this;
+    $.get("/getUpdate", function(data){
+      console.log(data.calling == 0)
+      console.log(data.calling)
+      self.setState({
+        callingStatus: data.calling == 0? "Not Calling" : "Calling",
+        serverStatus: data.foundsrvr == 0? "Disconnected":"Connected",
+        connection: data.connected == 0? "Disconnected": "Connected",
+        incomingPackets: data.pcktsin,
+        droppedPackets: data.dropouts,
+        fillStatus: [data.fill0, data.fill1],
+        inChannel: [data.insr, data.inchnl, data.inblcksz, data.inkbits],
+        outChannel: [data.outsr, data.outchnl, data.outblcksz, data.outkbits]
+      })
+    })
+  }
+
+  componentDidMount() {
+    setInterval( () => this.updateState(), 1000);
+  }
+
   render() {
     return (
       <div className="col-12 text-center text-white mx-auto">

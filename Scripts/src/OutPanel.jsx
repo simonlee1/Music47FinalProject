@@ -4,7 +4,7 @@ class OutPanel extends React.Component {
     this.state = {
       outputVal: 0,
       muteOn: false,
-      balance: 50
+      balance: 5
     };
   }
 
@@ -22,7 +22,15 @@ class OutPanel extends React.Component {
 
   onResetBalance(){
     this.setState({
-      balance: 50
+      balance: 5
+    })
+
+    let data = {
+      'bal' : 5
+    }
+
+    $.post("/setOutput", data, function (){
+
     })
   }
 
@@ -36,6 +44,34 @@ class OutPanel extends React.Component {
         muteOn: true,
       });
     }
+    let data = {
+      'mute': 0
+    }
+
+    $.post("/setOutput", data, function (){
+
+    })
+
+  }
+
+  updateLevel(levelValue, balance){
+    let data = {
+      'level': levelValue,
+      'bal' : balance
+    }
+
+    $.post("/setOutput", data, function (){
+
+    })
+  }
+
+  onMono(e){
+    let data = {
+      "mono": e.target.checked ? 1 : 0
+    }
+    $.post("/setOutput", data, function (){
+
+    })
   }
 
   render() {
@@ -54,6 +90,7 @@ class OutPanel extends React.Component {
                 max="100"
                 value={this.state.outputVal}
                 onChange={(e) => this.onTodoChange(e.target.value)}
+                onMouseUp= {(e) => this.updateLevel(this.state.outputVal, this.state.balance)}
               ></input>
 
               <input
@@ -63,7 +100,7 @@ class OutPanel extends React.Component {
                 max="100"
                 min="0"
                 value={this.state.outputVal}
-                onChange={(e) => this.onTodoChange(e.target.value)}
+                onChange={(e) => {this.onTodoChange(e.target.value); this.updateLevel(e.target.value, this.state.balance)}}
               ></input>
             </div>
 
@@ -88,6 +125,7 @@ class OutPanel extends React.Component {
                   type="checkbox"
                   value=""
                   id="flexCheckDefault"
+                  onClick={(e) => this.onMono(e)}
                 />
                 <label className="form-check-label" htmlFor="flexCheckDefault">
                   Mono
@@ -101,10 +139,11 @@ class OutPanel extends React.Component {
               <input
                   type="range"
                   className="form-range col"
-                  min="0"
-                  max="100"
+                  min="1"
+                  max="9"
                   value={this.state.balance}
                   onChange={(e) => this.onBalanceChange(e.target.value)}
+                  onMouseUp={(e) => this.updateLevel(this.state.outputVal, this.state.balance)}
                 ></input>
                 <button className="btn btn-sm btn-light mx-2" onClick={(e) => this.onResetBalance()}>Reset</button>
             </div>

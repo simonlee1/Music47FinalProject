@@ -24,10 +24,17 @@ var InPanel = function (_React$Component) {
 
   _createClass(InPanel, [{
     key: "onTodoChange",
-    value: function onTodoChange(value) {
+    value: function onTodoChange(value, name) {
       this.setState({
         inputVal: value
       });
+
+      if (name == "inputVal") {
+        var data = {
+          'level': value
+        };
+        $.post("/setInput", data, function () {});
+      }
     }
   }, {
     key: "onMute",
@@ -41,6 +48,11 @@ var InPanel = function (_React$Component) {
           muteOn: true
         });
       }
+
+      var data = {
+        "mute": 0
+      };
+      $.post("/setInput", data, function () {});
     }
   }, {
     key: "onTest",
@@ -54,7 +66,19 @@ var InPanel = function (_React$Component) {
           testOn: true
         });
       }
-      console.log(this.state);
+
+      var data = {
+        "test": this.state.testOn ? 0 : 1
+      };
+      $.post("/setInput", data, function () {});
+    }
+  }, {
+    key: "updateLevel",
+    value: function updateLevel() {
+      var data = {
+        'level': this.state.inputVal
+      };
+      $.post("/setInput", data, function () {});
     }
   }, {
     key: "render",
@@ -90,7 +114,10 @@ var InPanel = function (_React$Component) {
                 max: "100",
                 value: this.state.inputVal,
                 onChange: function onChange(e) {
-                  return _this2.onTodoChange(e.target.value);
+                  return _this2.onTodoChange(e.target.value, "");
+                },
+                onMouseUp: function onMouseUp(e) {
+                  return _this2.updateLevel();
                 }
               }),
               React.createElement("input", {
@@ -101,7 +128,7 @@ var InPanel = function (_React$Component) {
                 min: "0",
                 value: this.state.inputVal,
                 onChange: function onChange(e) {
-                  return _this2.onTodoChange(e.target.value);
+                  _this2.onTodoChange(e.target.value, "inputVal");
                 }
               })
             ),

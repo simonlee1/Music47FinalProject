@@ -8,10 +8,19 @@ class InPanel extends React.Component {
     };
   }
 
-  onTodoChange(value) {
+  onTodoChange(value, name) {
     this.setState({
       inputVal: value,
     });
+    
+    if (name == "inputVal"){
+      let data = {
+        'level': value, 
+      }
+      $.post("/setInput", data, function(){
+        
+      })
+    }
   }
 
   onMute() {
@@ -24,6 +33,13 @@ class InPanel extends React.Component {
         muteOn: true,
       });
     }
+
+    let data = {
+      "mute": 0 
+    }
+    $.post("/setInput", data, function(){
+      
+    })
   }
 
   onTest() {
@@ -36,7 +52,22 @@ class InPanel extends React.Component {
         testOn: true,
       });
     }
-    console.log(this.state);
+
+    let data = {
+      "test": this.state.testOn ? 0 : 1
+    }
+    $.post("/setInput", data, function(){
+      
+    })
+  }
+
+  updateLevel(){
+    let data = {
+      'level': this.state.inputVal, 
+    }
+    $.post("/setInput", data, function(){
+      
+    })
   }
 
   render() {
@@ -54,7 +85,8 @@ class InPanel extends React.Component {
                 min="0"
                 max="100"
                 value={this.state.inputVal}
-                onChange={(e) => this.onTodoChange(e.target.value)}
+                onChange={(e) => this.onTodoChange(e.target.value, "")}
+                onMouseUp= {(e) => this.updateLevel()}
               ></input>
 
               <input
@@ -64,7 +96,7 @@ class InPanel extends React.Component {
                 max="100"
                 min="0"
                 value={this.state.inputVal}
-                onChange={(e) => this.onTodoChange(e.target.value)}
+                onChange={(e) => {this.onTodoChange(e.target.value, "inputVal")}}
               ></input>
             </div>
 

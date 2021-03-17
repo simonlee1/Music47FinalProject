@@ -1,23 +1,41 @@
 class QuackPanel extends React.Component {
   constructor() {
     super();
+
     this.state = {
       inputDelay: 10,
       channelVal: "2",
       blockVal: "64",
       isOn: false,
-    };
+      double: false,
+      callName: "",
+      server: "foo.ucsd.edu"
+    }
   }
 
+  
   onChange(e) {
     if (e.target.tagName === "INPUT") {
       this.setState({ inputDelay: e.target.value });
+      let data = {
+        "id": e.target.value
+      }
+      $.post("/setQuack", data, function(){
+      
+      })
     } else {
       if (this.state.isOn) {
         this.setState({ isOn: false });
       } else {
         this.setState({ isOn: true });
       }
+
+      let data = {
+        "state": this.state.isOn ? 0: 1
+      }
+      $.post("/setQuack", data, function(){
+      
+      })
     }
   }
 
@@ -26,10 +44,58 @@ class QuackPanel extends React.Component {
       this.setState({
         channelVal: value,
       });
+      let data = {
+        "chnls": value
+      }
+      $.post("/setQuack", data, function(){
+      
+      })
     } else if (event.target.name == "BlockSize") {
       this.setState({
         blockVal: value,
       });
+      let data = {
+        "blcksz": value == "64" ? 0 : value == "128" ? 1: 2
+      }
+      $.post("/setQuack", data, function(){
+      
+      })
+    }
+    else if (event.target.name == "2x"){
+      let data = {
+        "dbl": event.target.checked ? 1 : 0
+      }
+      $.post("/setQuack", data, function(){
+      
+      })
+    }
+  }
+
+  onNameChange(e){
+    if (e.target.name == "callName"){
+      this.setState({
+        callName: e.target.value
+      })
+      let data = {
+        cllnm : e.target.value
+      }
+
+      $.post("/setQuack", data, function(){
+      
+      })
+    }
+    else if (e.target.name == "serverName"){
+      this.setState({
+        server: e.target.value
+      })
+
+      let data = {
+        srvrnm: e.target.value
+      }
+
+      $.post("/setQuack", data, function(){
+      
+      })
     }
   }
 
@@ -111,6 +177,8 @@ class QuackPanel extends React.Component {
                 type="checkbox"
                 value=""
                 id="flexCheckDefault"
+                name="2x"
+                onClick = {(e) => this.onClick(e, "2x")}
               />
               <label className="form-check-label" htmlFor="flexCheckDefault">
                 2x
@@ -121,11 +189,11 @@ class QuackPanel extends React.Component {
           <div className="row">
             <div className="col-4 mx-auto my-3">
               <h3>Call Name</h3>
-              <input type="text" className="form-control"></input>
+              <input type="text" className="form-control" name="callName" onChange={(e) => {this.onNameChange(e)}} value={this.state.callName}></input>
             </div>
             <div className="col-4 mx-auto my-3">
               <h3>Server</h3>
-              <input type="text" className="form-control"></input>
+              <input type="text" className="form-control" name="serverName" onChange={(e) => {this.onNameChange(e)}} value={this.state.server}></input>
             </div>
           </div>
         </div>

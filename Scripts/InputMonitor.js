@@ -22,96 +22,112 @@ var InputMonitor = function (_React$Component) {
   }
 
   _createClass(InputMonitor, [{
-    key: "onVolumeChange",
+    key: 'onVolumeChange',
     value: function onVolumeChange(value) {
       this.setState({
         inputVal: value
       });
     }
   }, {
-    key: "onTodoChange",
+    key: 'onTodoChange',
     value: function onTodoChange(value) {
       this.setState({
         delayVal: value
       });
     }
   }, {
-    key: "render",
+    key: 'updatePd',
+    value: function updatePd(im, imdelay) {
+      var data = {
+        'im': im,
+        'imdelay': imdelay
+      };
+
+      $.post("/setInput", data, function () {});
+    }
+  }, {
+    key: 'render',
     value: function render() {
       var _this2 = this;
 
       return React.createElement(
-        "div",
-        { className: "col-6 text-center text-white " },
+        'div',
+        { className: 'col-6 text-center text-white ' },
         React.createElement(
-          "label",
-          { className: "form-label" },
-          "Input Monitor"
+          'label',
+          { className: 'form-label' },
+          'Input Monitor'
         ),
         React.createElement(
-          "div",
-          { className: "row d-flex justify-content-center" },
+          'div',
+          { className: 'row d-flex justify-content-center' },
           React.createElement(
-            "div",
-            { className: "col-6" },
+            'div',
+            { className: 'col-6' },
             React.createElement(
-              "div",
-              { className: "col-6 mx-auto" },
+              'div',
+              { className: 'col-6 mx-auto' },
               React.createElement(
-                "label",
+                'label',
                 null,
-                "Volume"
+                'Volume'
               ),
-              React.createElement("input", {
-                type: "range",
-                className: "form-range col",
-                min: "0",
-                max: "100",
+              React.createElement('input', {
+                type: 'range',
+                className: 'form-range col',
+                min: '0',
+                max: '100',
                 value: this.state.inputVal,
                 onChange: function onChange(e) {
                   return _this2.onVolumeChange(e.target.value);
+                },
+                onMouseUp: function onMouseUp(e) {
+                  return _this2.updatePd(_this2.state.inputVal, _this2.state.delayVal);
                 }
               }),
-              React.createElement("input", {
-                type: "number",
+              React.createElement('input', {
+                type: 'number',
                 style: { textAlign: "center" },
-                className: "form-control col mb-2",
-                max: "100",
-                min: "0",
+                className: 'form-control col mb-2',
+                max: '100',
+                min: '0',
                 value: this.state.inputVal,
                 onChange: function onChange(e) {
-                  return _this2.onVolumeChange(e.target.value);
+                  _this2.onVolumeChange(e.target.value);_this2.updatePd(e.target.value, _this2.state.delayVal);
                 }
               }),
               React.createElement(
-                "label",
+                'label',
                 null,
-                "Delay"
+                'Delay'
               ),
-              React.createElement("input", {
-                type: "range",
-                className: "form-range col",
-                min: "0",
-                max: "100",
+              React.createElement('input', {
+                type: 'range',
+                className: 'form-range col',
+                min: '0',
+                max: '100',
                 value: this.state.delayVal,
                 onChange: function onChange(e) {
                   return _this2.onTodoChange(e.target.value);
+                },
+                onMouseUp: function onMouseUp(e) {
+                  return _this2.updatePd(_this2.state.inputVal, _this2.state.delayVal);
                 }
               }),
-              React.createElement("input", {
-                type: "number",
+              React.createElement('input', {
+                type: 'number',
                 style: { textAlign: "center" },
-                className: "form-control col mb-2",
-                max: "100",
-                min: "0",
+                className: 'form-control col mb-2',
+                max: '100',
+                min: '0',
                 value: this.state.delayVal,
                 onChange: function onChange(e) {
-                  return _this2.onTodoChange(e.target.value);
+                  _this2.onTodoChange(e.target.value);_this2.updatePd(_this2.state.inputVal, e.target.value);
                 }
               })
             )
           ),
-          React.createElement("div", { className: "col-1 bg-secondary" })
+          React.createElement('div', { className: 'col-1 bg-secondary' })
         )
       );
     }

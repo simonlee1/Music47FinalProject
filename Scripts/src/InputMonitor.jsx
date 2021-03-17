@@ -19,6 +19,17 @@ class InputMonitor extends React.Component {
     });
   }
 
+  updatePd(im, imdelay){
+    let data = {
+      'im': im, 
+      'imdelay': imdelay
+    }
+
+    $.post("/setInput", data, function(){
+      
+    })
+  }
+
   render() {
     return (
       <div className="col-6 text-center text-white ">
@@ -34,6 +45,7 @@ class InputMonitor extends React.Component {
                 max="100"
                 value={this.state.inputVal}
                 onChange={(e) => this.onVolumeChange(e.target.value)}
+                onMouseUp = {(e) => this.updatePd(this.state.inputVal, this.state.delayVal)}
               ></input>
 
               <input
@@ -43,7 +55,7 @@ class InputMonitor extends React.Component {
                 max="100"
                 min="0"
                 value={this.state.inputVal}
-                onChange={(e) => this.onVolumeChange(e.target.value)}
+                onChange={(e) => {this.onVolumeChange(e.target.value); this.updatePd(e.target.value, this.state.delayVal)}}
               ></input>
 
               <label>Delay</label>
@@ -54,6 +66,7 @@ class InputMonitor extends React.Component {
                 max="100"
                 value={this.state.delayVal}
                 onChange={(e) => this.onTodoChange(e.target.value)}
+                onMouseUp = {(e) => this.updatePd(this.state.inputVal, this.state.delayVal)}
               ></input>
 
               <input
@@ -63,7 +76,7 @@ class InputMonitor extends React.Component {
                 max="100"
                 min="0"
                 value={this.state.delayVal}
-                onChange={(e) => this.onTodoChange(e.target.value)}
+                onChange={(e) => {this.onTodoChange(e.target.value); this.updatePd(this.state.inputVal, e.target.value)}}
               ></input>
             </div>
           </div>
