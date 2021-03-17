@@ -30,8 +30,8 @@ def index():
     })
     socketServer.set_quackpanel({
         'state': 0,
-        'chnls': 0,
-        'blcksz': 2,
+        'chnls': 2,
+        'blcksz': 0,
         'dbl': 0,
         'id': 10,
         'cllnm': "",

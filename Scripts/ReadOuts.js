@@ -49,7 +49,11 @@ var ReadOuts = function (_React$Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      //setInterval( () => this.updateState(), 30000);
+      var _this2 = this;
+
+      setInterval(function () {
+        return _this2.updateState();
+      }, 1000);
     }
   }, {
     key: "onReset",
@@ -63,7 +67,7 @@ var ReadOuts = function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return React.createElement(
         "div",
@@ -132,7 +136,7 @@ var ReadOuts = function (_React$Component) {
             React.createElement(
               "button",
               { className: "btn btn-sm btn-light mx-2", onClick: function onClick(e) {
-                  return _this2.onReset();
+                  return _this3.onReset();
                 } },
               "Reset"
             )
