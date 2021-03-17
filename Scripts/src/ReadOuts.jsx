@@ -32,7 +32,7 @@ class ReadOuts extends React.Component {
   }
 
   componentDidMount() {
-    setInterval( () => this.updateState(), 1000);
+    setInterval( () => this.updateState(), 5000);
   }
 
   onReset(){

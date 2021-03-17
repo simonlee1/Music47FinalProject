@@ -53,7 +53,7 @@ var ReadOuts = function (_React$Component) {
 
       setInterval(function () {
         return _this2.updateState();
-      }, 1000);
+      }, 5000);
     }
   }, {
     key: "onReset",
