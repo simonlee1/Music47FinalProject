@@ -1,4 +1,4 @@
-#N canvas -1647 94 931 760 12;
+#N canvas 617 228 1042 760 12;
 #X obj 618 499 t b;
 #X obj 618 446 f;
 #X obj 618 524 f;
@@ -129,7 +129,7 @@
 #X obj 209 237 expr $f1 + 0.25*($f1*$f2);
 #X obj 265 263 expr $f2 + 0.25*($f1*$f2);
 #X obj 32 48 vsl 12 51 0 100 0 0 \$0-lvl \$0-lvl-set empty 0 -9 0 10
--262144 -1 -1 0 1;
+-262144 -1 -1 1000 1;
 #X text 42 63 -;
 #X obj 736 85 r outpanel;
 #X obj 736 116 route 0 1 2 3 4;
